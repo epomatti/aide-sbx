@@ -60,43 +60,61 @@ sudo cp /var/lib/aide/aide.db.new /var/lib/aide/aide.db
 
 ### Running AIDE
 
-T
+Command to run AIDE manually:
 
 ```sh
 sudo aide --check --config=/etc/aide/aide.conf
 ```
 
-
-
 ## Configuration
 
-Configuration file:
+> [!TIP]
+> Detailed configuration can be found in the manuals: [aide.conf (Ubuntu)](https://manpages.ubuntu.com/manpages/jammy/man5/aide.conf.5.html),[ aide.conf (Debian)](https://manpages.debian.org/bookworm/aide/aide.conf.5.en.html), and further details can be obtained in the [manual](https://aide.github.io/doc/)
 
-```sh
+Edit the configuration file:
+
+```
 /etc/aide/aide.conf
 ```
 
-```
-/var/lib/aide/
+The default configuration will include several files from `/etc/aide/aide.conf.d`.
+
+As a sample for manual configuration:
+
+> [!TIP]
+> Use `$` to indicate a file
+
+```conf
+@@x_include_setenv PATH /bin:/usr/bin
+#@@x_include /etc/aide/aide.conf.d ^[a-zA-Z0-9_-]+$
+
+/opt R
+/etc R
 ```
 
+Once changes have been made, reapply them:
+
+```
 sudo aide --init --config=/etc/aide/aide.conf
+```
 
-https://manpages.debian.org/unstable/aide/aide.conf.5.en.html
+It's likely that the database must be copied again:
 
 ```sh
 sudo cp /var/lib/aide/aide.db.new /var/lib/aide/aide.db
 ```
 
-https://aide.github.io/doc/
-
 
 ### Run Daily
+
+A simple way of running AIDE automatically is using `cron.daily`:
 
 ```sh
 sudo cp /usr/share/doc/aide/examples/aide.cron.daily /etc/cron.daily/aide
 sudo chmod +x /etc/cron.daily/aide
 ```
+
+To disable the service:
 
 ```sh
 sudo mv /etc/cron.daily/aide /etc/cron.daily/aide.disabled

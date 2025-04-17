@@ -114,10 +114,12 @@ sudo cp /usr/share/doc/aide/examples/aide.cron.daily /etc/cron.daily/aide
 sudo chmod +x /etc/cron.daily/aide
 ```
 
-To disable the service:
+To disable the service, there are [options](https://serverfault.com/q/150348/560797). There are caveats.
+
+This will show which scripts are run without executing them:
 
 ```sh
-sudo mv /etc/cron.daily/aide /etc/cron.daily/aide.disabled
+sudo run-parts --test /etc/cron.daily
 ```
 
 ## Other

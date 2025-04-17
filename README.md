@@ -141,7 +141,8 @@ dpkg-query -s aide-common &>/dev/null && echo "aide-common is installed"
 Logs are available in varying locations:
 
 ```sh
-sudo grep aide /var/log/syslog
 sudo journalctl | grep aide
+sudo grep -i aide /var/log/syslog
+sudo grep -i cron /var/log/syslog
 sudo ls -l /var/log/aide
 ```
